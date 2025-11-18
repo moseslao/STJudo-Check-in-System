@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道場印STJudo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid #3498db;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: #ffffff;
+        }
+        
+        .card-section {
+            flex: 1;
+            min-width: 350px;
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+        }
+        
+        .records-section {
+            flex: 2;
+            min-width: 500px;
+            padding: 20px;
+        }
+        
+        .calendar-section {
+            flex: 1;
+            min-width: 400px;
+            padding: 20px;
+            border-left: 1px solid #e0e0e0;
+        }
+        
+        .card-reader {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            border: 2px dashed #3498db;
+        }
+        
+        .card-reader h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .card-icon {
+            font-size: 4rem;
+            color: #3498db;
+            margin: 20px 0;
+        }
+        
+        .status {
+            font-size: 1.2rem;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            background-color: #e8f4fc;
+            color: #2c3e50;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-register {
+            background: #2ecc71;
+        }
+        
+        .btn-register:hover {
+            background: #27ae60;
+        }
+        
+        .btn-location {
+            background: #9b59b6;
+        }
+        
+        .btn-location:hover {
+            background: #8e44ad;
+        }
+        
+        .btn-calendar {
+            background: #e67e22;
+        }
+        
+        .btn-calendar:hover {
+            background: #d35400;
+        }
+        
+        .btn-admin {
+            background: #e74c3c;
+        }
+        
+        .btn-admin:hover {
+            background: #c0392b;
+        }
+        
+        .btn-start {
+            background: #2ecc71;
+        }
+        
+        .btn-start:hover {
+            background: #27ae60;
+        }
+        
+        .btn-stop {
+            background: #e74c3c;
+        }
+        
+        .btn-stop:hover {
+            background: #c0392b;
+        }
+        
+        .system-status {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .system-status h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-active {
+            background: #2ecc71;
+        }
+        
+        .status-inactive {
+            background: #e74c3c;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: #ffffff;
+        }
+        
+        .card-input {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-input h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .records-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .records-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .records-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            background: #ffffff;
+        }
+        
+        .records-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .records-table tr:hover {
+            background-color: #e8f4fc;
+        }
+        
+        .time-in {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .time-out {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .location {
+            color: #9b59b6;
+            font-weight: bold;
+        }
+        
+        .card-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-info h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            margin: 0 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .location-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .location-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .location-movement {
+            color: #e67e22;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 8px;
+            background: #fef9e7;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .calendar-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .calendar-day:hover {
+            background: #e8f4fc;
+            transform: scale(1.05);
+        }
+        
+        .calendar-day.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .calendar-day.has-records {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .calendar-day.weekend {
+            background: #f8d7da;
+        }
+        
+        .calendar-day.other-month {
+            color: #ccc;
+            background: #f8f9fa;
+        }
+        
+        .day-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .day-details h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .day-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .summary-box {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            margin: 0 5px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .summary-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .summary-label {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .day-records {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .day-record-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        
+        .day-record-item:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .admin-panel {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .admin-panel h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        
+        .cards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .cards-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .cards-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        
+        .cards-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .cards-table tr:hover {
+            background-color: #e8f4fc;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .card-section, .calendar-section {
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+                border-left: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>道場印STJudo</h1>
+            <p class="subtitle">記錄學員打卡時間與地點移動軌跡</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="card-section">
+                <div class="system-status">
+                    <h3>系統狀態</h3>
+                    <div id="systemStatus">
+                        <span class="status-indicator status-inactive"></span>
+                        <span>系統未啟動</span>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-start" id="startSystem">啟動打卡系統</button>
+                        <button class="btn btn-stop" id="stopSystem" disabled>結束打卡系統</button>
+                    </div>
+                </div>
+                
+                <div class="card-reader">
+                    <h2>卡片讀取區域</h2>
+                    <div class="card-icon">💳</div>
+                    <div class="status" id="status">系統未啟動，請先啟動系統</div>
+                    
+                    <div class="card-input">
+                        <h3>輸入卡片ID</h3>
+                        <div class="form-group">
+                            <label for="cardInput">卡片ID:</label>
+                            <input type="text" id="cardInput" placeholder="請輸入卡片ID" autocomplete="off">
+                        </div>
+                        <button class="btn" id="processCardBtn">確認打卡</button>
+                    </div>
+                    
+                    <div class="location-info">
+                        <h3>當前地點設置</h3>
+                        <div class="form-group">
+                            <label for="currentLocation">打卡地點:</label>
+                            <select id="currentLocation">
+                                <option value="自修室">自修室</option>
+                                <option value="柔道場">柔道場</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-register" id="registerCard">註冊新卡</button>
+                    <button class="btn btn-admin" id="adminPanel">後台管理</button>
+                </div>
+                
+                <div class="card-info">
+                    <h3>卡片資訊</h3>
+                    <div class="form-group">
+                        <label for="cardId">卡片ID:</label>
+                        <input type="text" id="cardId" placeholder="刷卡後自動顯示" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="userName">持卡人姓名:</label>
+                        <input type="text" id="userName" placeholder="刷卡後自動顯示" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="userRole">身份:</label>
+                        <input type="text" id="userRole" placeholder="刷卡後自動顯示" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastAction">最後操作:</label>
+                        <input type="text" id="lastAction" placeholder="刷卡後自動顯示" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastLocation">最後地點:</label>
+                        <input type="text" id="lastLocation" placeholder="刷卡後自動顯示" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastTime">最後時間:</label>
+                        <input type="text" id="lastTime" placeholder="刷卡後自動顯示" readonly>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalCards">0</div>
+                        <div class="stat-label">已註冊卡片</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="presentToday">0</div>
+                        <div class="stat-label">今日簽到</div>
+                    </div>
+                </div>
+                
+                <div class="admin-panel" id="adminPanelSection" style="display: none;">
+                    <h3>卡片管理後台</h3>
+                    <div class="cards-table-container">
+                        <table class="cards-table">
+                            <thead>
+                                <tr>
+                                    <th>卡片ID</th>
+                                    <th>姓名</th>
+                                    <th>身份</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cardsTableBody">
+                                <!-- 卡片資料將通過JavaScript動態添加 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="records-section">
+                <h2>打卡記錄</h2>
+                <div class="form-group">
+                    <label for="filterDate">篩選日期:</label>
+                    <input type="date" id="filterDate">
+                </div>
+                
+                <table class="records-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>身份</th>
+                            <th>簽到時間</th>
+                            <th>簽退時間</th>
+                            <th>地點</th>
+                            <th>狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsBody">
+                        <!-- 記錄將通過JavaScript動態添加 -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="calendar-section">
+                <div class="calendar-container">
+                    <h2>日曆查詢</h2>
+                    <div class="calendar-header">
+                        <button class="btn btn-calendar" id="prevMonth">上個月</button>
+                        <h3 id="currentMonth">2023年11月</h3>
+                        <button class="btn btn-calendar" id="nextMonth">下個月</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- 日曆將通過JavaScript動態生成 -->
+                    </div>
+                </div>
+                
+                <div class="day-details">
+                    <h3 id="selectedDateTitle">選擇日期查看詳情</h3>
+                    <div class="day-summary">
+                        <div class="summary-box">
+                            <div class="summary-number" id="dayTotal">0</div>
+                            <div class="summary-label">總打卡次數</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-number" id="dayPresent">0</div>
+                            <div class="summary-label">簽到人數</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-number" id="dayLocations">0</div>
+                            <div class="summary-label">地點數量</div>
+                        </div>
+                    </div>
+                    <div class="day-records" id="dayRecords">
+                        <!-- 當日記錄將通過JavaScript動態添加 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>道場印STJudo &copy; 2025 - 記錄學員移動軌跡</p>
+        </footer>
+    </div>
+
+    <!-- 註冊新卡模態框 -->
+    <div id="registerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">註冊新卡片</h2>
+            <div class="form-group">
+                <label for="newCardId">卡片ID:</label>
+                <input type="text" id="newCardId" placeholder="請輸入卡片ID">
+            </div>
+            <div class="form-group">
+                <label for="newUserName">持卡人姓名:</label>
+                <input type="text" id="newUserName" placeholder="請輸入姓名">
+            </div>
+            <div class="form-group">
+                <label for="newUserRole">身份:</label>
+                <select id="newUserRole">
+                    <option value="學員">學員</option>
+                    <option value="委員">委員</option>
+                    <option value="導師">導師</option>
+                </select>
+            </div>
+            <div style="margin-top: 25px; text-align: right;">
+                <button class="btn" id="cancelRegister">取消</button>
+                <button class="btn btn-register" id="confirmRegister">確認註冊</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯卡片模態框 -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">編輯卡片資料</h2>
+            <div class="form-group">
+                <label for="editCardId">卡片ID:</label>
+                <input type="text" id="editCardId" readonly>
+            </div>
+            <div class="form-group">
+                <label for="editUserName">持卡人姓名:</label>
+                <input type="text" id="editUserName">
+            </div>
+            <div class="form-group">
+                <label for="editUserRole">身份:</label>
+                <select id="editUserRole">
+                    <option value="學員">學員</option>
+                    <option value="委員">委員</option>
+                    <option value="導師">導師</option>
+                </select>
+            </div>
+            <div style="margin-top: 25px; text-align: right;">
+                <button class="btn" id="cancelEdit">取消</button>
+                <button class="btn btn-register" id="confirmEdit">確認修改</button>
+                <button class="btn btn-admin" id="deleteCard">刪除卡片</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 從localStorage加載數據，如果沒有則初始化為空
+        let cardData = JSON.parse(localStorage.getItem('judoCardData')) || {};
+        let attendanceRecords = JSON.parse(localStorage.getItem('judoAttendanceRecords')) || [];
+        
+        // 系統狀態
+        let systemActive = false;
+        
+        // DOM元素
+        const statusEl = document.getElementById('status');
+        const cardIdEl = document.getElementById('cardId');
+        const userNameEl = document.getElementById('userName');
+        const userRoleEl = document.getElementById('userRole');
+        const lastActionEl = document.getElementById('lastAction');
+        const lastLocationEl = document.getElementById('lastLocation');
+        const lastTimeEl = document.getElementById('lastTime');
+        const recordsBodyEl = document.getElementById('recordsBody');
+        const registerCardBtn = document.getElementById('registerCard');
+        const adminPanelBtn = document.getElementById('adminPanel');
+        const adminPanelSection = document.getElementById('adminPanelSection');
+        const registerModal = document.getElementById('registerModal');
+        const cancelRegisterBtn = document.getElementById('cancelRegister');
+        const confirmRegisterBtn = document.getElementById('confirmRegister');
+        const newCardIdEl = document.getElementById('newCardId');
+        const newUserNameEl = document.getElementById('newUserName');
+        const newUserRoleEl = document.getElementById('newUserRole');
+        const filterDateEl = document.getElementById('filterDate');
+        const totalCardsEl = document.getElementById('totalCards');
+        const presentTodayEl = document.getElementById('presentToday');
+        const currentLocationEl = document.getElementById('currentLocation');
+        const cardsTableBodyEl = document.getElementById('cardsTableBody');
+        const systemStatusEl = document.getElementById('systemStatus');
+        const startSystemBtn = document.getElementById('startSystem');
+        const stopSystemBtn = document.getElementById('stopSystem');
+        const cardInputEl = document.getElementById('cardInput');
+        const processCardBtn = document.getElementById('processCardBtn');
+        
+        // 編輯模態框元素
+        const editModal = document.getElementById('editModal');
+        const editCardIdEl = document.getElementById('editCardId');
+        const editUserNameEl = document.getElementById('editUserName');
+        const editUserRoleEl = document.getElementById('editUserRole');
+        const cancelEditBtn = document.getElementById('cancelEdit');
+        const confirmEditBtn = document.getElementById('confirmEdit');
+        const deleteCardBtn = document.getElementById('deleteCard');
+        
+        // 日曆相關元素
+        const calendarGridEl = document.getElementById('calendarGrid');
+        const currentMonthEl = document.getElementById('currentMonth');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        const selectedDateTitleEl = document.getElementById('selectedDateTitle');
+        const dayTotalEl = document.getElementById('dayTotal');
+        const dayPresentEl = document.getElementById('dayPresent');
+        const dayLocationsEl = document.getElementById('dayLocations');
+        const dayRecordsEl = document.getElementById('dayRecords');
+        
+        // 設置默認日期為今天
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+        filterDateEl.value = todayStr;
+        
+        // 日曆相關變數
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+        let selectedDate = todayStr;
+
+        // 已註冊卡片列表
+        const registeredCards = new Set(Object.keys(cardData));
+        
+        // 保存數據到localStorage
+        function saveData() {
+            localStorage.setItem('judoCardData', JSON.stringify(cardData));
+            localStorage.setItem('judoAttendanceRecords', JSON.stringify(attendanceRecords));
+        }
+        
+        // 更新系統狀態顯示
+        function updateSystemStatus() {
+            if (systemActive) {
+                systemStatusEl.innerHTML = '<span class="status-indicator status-active"></span><span>系統運行中 - 可進行打卡</span>';
+                statusEl.textContent = "請輸入卡片ID進行打卡";
+                startSystemBtn.disabled = true;
+                stopSystemBtn.disabled = false;
+                cardInputEl.disabled = false;
+                processCardBtn.disabled = false;
+            } else {
+                systemStatusEl.innerHTML = '<span class="status-indicator status-inactive"></span><span>系統未啟動</span>';
+                statusEl.textContent = "系統未啟動，請先啟動系統";
+                startSystemBtn.disabled = false;
+                stopSystemBtn.disabled = true;
+                cardInputEl.disabled = true;
+                processCardBtn.disabled = true;
+            }
+        }
+        
+        // 啟動系統
+        startSystemBtn.addEventListener('click', function() {
+            systemActive = true;
+            updateSystemStatus();
+            statusEl.innerHTML = '<span style="color: #2ecc71;">系統已啟動，請輸入卡片ID進行打卡</span>';
+            cardInputEl.focus();
+        });
+        
+        // 停止系統
+        stopSystemBtn.addEventListener('click', function() {
+            systemActive = false;
+            updateSystemStatus();
+            statusEl.innerHTML = '<span style="color: #e74c3c;">系統已停止，無法打卡</span>';
+        });
+        
+        // 更新統計數據
+        function updateStats() {
+            totalCardsEl.textContent = Object.keys(cardData).length;
+            
+            const todayRecords = attendanceRecords.filter(record => 
+                record.date === todayStr
+            );
+            
+            const uniqueToday = [...new Set(todayRecords.map(record => record.cardId))];
+            presentTodayEl.textContent = uniqueToday.length;
+        }
+        
+        // 處理刷卡 - 根據實際卡片ID處理
+        function processCard(cardId) {
+            if (!systemActive) {
+                statusEl.innerHTML = '<span style="color: #e74c3c;">系統未啟動，無法打卡</span>';
+                return;
+            }
+            
+            console.log("處理卡片ID:", cardId);
+            
+            // 檢查卡片是否已註冊
+            if (registeredCards.has(cardId)) {
+                // 已註冊卡片
+                const user = cardData[cardId];
+                const now = new Date();
+                const currentTime = now.toLocaleTimeString('zh-TW');
+                const currentDate = now.toISOString().split('T')[0];
+                const currentLocation = currentLocationEl.value;
+                
+                // 更新卡片信息顯示
+                cardIdEl.value = cardId;
+                userNameEl.value = user.name;
+                userRoleEl.value = user.role;
+                
+                // 判斷是簽到還是簽退
+                let action = "簽到";
+                let timeClass = "time-in";
+                
+                // 檢查用戶是否有未簽退的記錄
+                const hasUnfinished = user.lastAction === "簽到" && user.lastTime && !user.lastTime.includes("簽退");
+                
+                if (hasUnfinished) {
+                    action = "簽退";
+                    timeClass = "time-out";
+                }
+                
+                // 更新最後操作信息
+                user.lastAction = action;
+                user.lastTime = currentTime;
+                user.lastLocation = currentLocation;
+                
+                lastActionEl.value = action;
+                lastTimeEl.value = currentTime;
+                lastLocationEl.value = currentLocation;
+                
+                // 顯示地點移動信息
+                let locationMovement = "";
+                if (user.lastLocation && user.lastLocation !== currentLocation) {
+                    locationMovement = `<div class="location-movement">從 ${user.lastLocation} 移動到 ${currentLocation}</div>`;
+                }
+                
+                // 更新狀態顯示
+                statusEl.innerHTML = `
+                    <div>
+                        <span class="${timeClass}">${user.name} ${action}成功 - ${currentTime}</span>
+                        <div class="location">地點: ${currentLocation}</div>
+                        ${locationMovement}
+                    </div>
+                `;
+                
+                // 添加打卡記錄
+                const newRecord = {
+                    cardId: cardId,
+                    name: user.name,
+                    role: user.role,
+                    date: currentDate,
+                    timeIn: action === "簽到" ? currentTime : user.lastTime,
+                    timeOut: action === "簽退" ? currentTime : "",
+                    location: currentLocation
+                };
+                
+                attendanceRecords.unshift(newRecord);
+                
+                // 保存數據到localStorage
+                saveData();
+                
+                // 更新記錄表格
+                updateRecordsTable();
+                updateStats();
+                updateCalendar();
+                updateDayDetails(selectedDate);
+                
+                // 清空輸入框並聚焦
+                cardInputEl.value = '';
+                cardInputEl.focus();
+                
+            } else {
+                // 未註冊卡片
+                cardIdEl.value = cardId;
+                userNameEl.value = "未註冊";
+                userRoleEl.value = "---";
+                lastActionEl.value = "未註冊卡片";
+                lastTimeEl.value = "---";
+                lastLocationEl.value = "---";
+                
+                statusEl.innerHTML = `<span style="color: #e74c3c;">卡片ID: ${cardId} 未註冊，請先註冊</span>`;
+                
+                // 清空輸入框並聚焦
+                cardInputEl.value = '';
+                cardInputEl.focus();
+            }
+        }
+        
+        // 確認打卡按鈕事件
+        processCardBtn.addEventListener('click', function() {
+            const cardId = cardInputEl.value.trim();
+            if (cardId) {
+                processCard(cardId);
+            } else {
+                statusEl.innerHTML = '<span style="color: #e74c3c;">請輸入卡片ID</span>';
+                cardInputEl.focus();
+            }
+        });
+        
+        // 按Enter鍵也可以打卡
+        cardInputEl.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                processCardBtn.click();
+            }
+        });
+        
+        // 更新記錄表格
+        function updateRecordsTable() {
+            const filterDate = filterDateEl.value;
+            const filteredRecords = attendanceRecords.filter(record => record.date === filterDate);
+            
+            recordsBodyEl.innerHTML = "";
+            
+            if (filteredRecords.length === 0) {
+                recordsBodyEl.innerHTML = `<tr><td colspan="6" style="text-align: center;">暫無記錄</td></tr>`;
+                return;
+            }
+            
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.name}</td>
+                    <td>${record.role}</td>
+                    <td class="time-in">${record.timeIn || '--:--:--'}</td>
+                    <td class="time-out">${record.timeOut || '--:--:--'}</td>
+                    <td class="location">${record.location}</td>
+                    <td>${record.timeOut ? '已簽退' : '已簽到'}</td>
+                `;
+                
+                recordsBodyEl.appendChild(row);
+            });
+        }
+        
+        // 註冊新卡
+        registerCardBtn.addEventListener('click', function() {
+            newCardIdEl.value = "";
+            newUserNameEl.value = "";
+            newUserRoleEl.value = "學員";
+            registerModal.style.display = "flex";
+        });
+        
+        // 取消註冊
+        cancelRegisterBtn.addEventListener('click', function() {
+            registerModal.style.display = "none";
+        });
+        
+        // 確認註冊
+        confirmRegisterBtn.addEventListener('click', function() {
+            const cardId = newCardIdEl.value.trim();
+            const userName = newUserNameEl.value.trim();
+            const userRole = newUserRoleEl.value;
+            
+            if (!cardId) {
+                alert("請輸入卡片ID");
+                return;
+            }
+            
+            if (!userName) {
+                alert("請輸入持卡人姓名");
+                return;
+            }
+            
+            // 檢查卡片ID是否已存在
+            if (registeredCards.has(cardId)) {
+                alert("此卡片ID已註冊，請使用其他ID");
+                return;
+            }
+            
+            // 添加到卡片數據
+            cardData[cardId] = {
+                name: userName,
+                role: userRole,
+                lastAction: null,
+                lastTime: null,
+                lastLocation: null
+            };
+            
+            // 添加到已註冊卡片列表
+            registeredCards.add(cardId);
+            
+            // 保存數據到localStorage
+            saveData();
+            
+            // 關閉模態框
+            registerModal.style.display = "none";
+            
+            // 更新狀態
+            statusEl.innerHTML = `<span style="color: #2ecc71;">卡片 ${cardId} 註冊成功 - ${userName}</span>`;
+            
+            // 更新統計數據
+            updateStats();
+            updateCardsTable();
+            
+            // 清空表單
+            newCardIdEl.value = "";
+            newUserNameEl.value = "";
+            
+            // 聚焦到卡片輸入框
+            cardInputEl.focus();
+        });
+        
+        // 後台管理
+        adminPanelBtn.addEventListener('click', function() {
+            if (adminPanelSection.style.display === 'none') {
+                adminPanelSection.style.display = 'block';
+                updateCardsTable();
+            } else {
+                adminPanelSection.style.display = 'none';
+            }
+        });
+        
+        // 更新卡片表格
+        function updateCardsTable() {
+            cardsTableBodyEl.innerHTML = '';
+            
+            Object.keys(cardData).forEach(cardId => {
+                const user = cardData[cardId];
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${cardId}</td>
+                    <td>${user.name}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <button class="btn" data-card-id="${cardId}">編輯</button>
+                    </td>
+                `;
+                
+                cardsTableBodyEl.appendChild(row);
+            });
+            
+            // 添加編輯按鈕事件
+            document.querySelectorAll('#cardsTableBody .btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const cardId = this.getAttribute('data-card-id');
+                    openEditModal(cardId);
+                });
+            });
+        }
+        
+        // 打開編輯模態框
+        function openEditModal(cardId) {
+            const user = cardData[cardId];
+            editCardIdEl.value = cardId;
+            editUserNameEl.value = user.name;
+            editUserRoleEl.value = user.role;
+            editModal.style.display = 'flex';
+        }
+        
+        // 取消編輯
+        cancelEditBtn.addEventListener('click', function() {
+            editModal.style.display = 'none';
+        });
+        
+        // 確認編輯
+        confirmEditBtn.addEventListener('click', function() {
+            const cardId = editCardIdEl.value;
+            const userName = editUserNameEl.value.trim();
+            const userRole = editUserRoleEl.value;
+            
+            if (!userName) {
+                alert("請輸入持卡人姓名");
+                return;
+            }
+            
+            // 更新卡片數據
+            cardData[cardId].name = userName;
+            cardData[cardId].role = userRole;
+            
+            // 保存數據到localStorage
+            saveData();
+            
+            // 關閉模態框
+            editModal.style.display = 'none';
+            
+            // 更新卡片表格
+            updateCardsTable();
+            
+            // 更新狀態
+            statusEl.innerHTML = `<span style="color: #2ecc71;">卡片資料更新成功</span>`;
+        });
+        
+        // 刪除卡片
+        deleteCardBtn.addEventListener('click', function() {
+            const cardId = editCardIdEl.value;
+            
+            if (confirm(`確定要刪除卡片 ${cardId} 的資料嗎？`)) {
+                // 刪除卡片數據
+                delete cardData[cardId];
+                
+                // 從已註冊卡片列表中移除
+                registeredCards.delete(cardId);
+                
+                // 保存數據到localStorage
+                saveData();
+                
+                // 關閉模態框
+                editModal.style.display = 'none';
+                
+                // 更新卡片表格和統計
+                updateCardsTable();
+                updateStats();
+                
+                // 更新狀態
+                statusEl.innerHTML = `<span style="color: #e74c3c;">卡片資料已刪除</span>`;
+            }
+        });
+        
+        // 日期篩選
+        filterDateEl.addEventListener('change', updateRecordsTable);
+        
+        // 生成日曆
+        function generateCalendar(month, year) {
+            calendarGridEl.innerHTML = '';
+            
+            // 添加星期標題
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            weekdays.forEach(day => {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day-header';
+                dayEl.textContent = day;
+                calendarGridEl.appendChild(dayEl);
+            });
+            
+            // 獲取當月第一天和最後一天
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay();
+            
+            // 添加上個月的日期
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            for (let i = 0; i < startingDay; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                dayEl.textContent = prevMonthLastDay - startingDay + i + 1;
+                calendarGridEl.appendChild(dayEl);
+            }
+            
+            // 添加當月日期
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = i;
+                
+                // 檢查是否是週末
+                const dayOfWeek = new Date(year, month, i).getDay();
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    dayEl.classList.add('weekend');
+                }
+                
+                // 檢查是否有打卡記錄
+                const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+                const dayRecords = attendanceRecords.filter(record => record.date === dateStr);
+                
+                if (dayRecords.length > 0) {
+                    dayEl.classList.add('has-records');
+                }
+                
+                // 檢查是否是選中的日期
+                if (dateStr === selectedDate) {
+                    dayEl.classList.add('active');
+                }
+                
+                // 添加點擊事件
+                dayEl.addEventListener('click', function() {
+                    selectedDate = dateStr;
+                    updateCalendar();
+                    updateDayDetails(dateStr);
+                });
+                
+                calendarGridEl.appendChild(dayEl);
+            }
+            
+            // 添加下個月的日期
+            const totalCells = 42; // 6行 x 7列
+            const remainingCells = totalCells - (startingDay + daysInMonth);
+            for (let i = 1; i <= remainingCells; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                dayEl.textContent = i;
+                calendarGridEl.appendChild(dayEl);
+            }
+            
+            // 更新月份標題
+            currentMonthEl.textContent = `${year}年${month + 1}月`;
+        }
+        
+        // 更新日曆
+        function updateCalendar() {
+            generateCalendar(currentMonth, currentYear);
+        }
+        
+        // 更新日期詳情
+        function updateDayDetails(date) {
+            const dayRecords = attendanceRecords.filter(record => record.date === date);
+            const uniqueCards = [...new Set(dayRecords.map(record => record.cardId))];
+            const uniqueLocations = [...new Set(dayRecords.map(record => record.location))];
+            
+            // 更新標題
+            selectedDateTitleEl.textContent = `${date} 打卡詳情`;
+            
+            // 更新摘要
+            dayTotalEl.textContent = dayRecords.length;
+            dayPresentEl.textContent = uniqueCards.length;
+            dayLocationsEl.textContent = uniqueLocations.length;
+            
+            // 更新記錄列表
+            dayRecordsEl.innerHTML = '';
+            
+            if (dayRecords.length === 0) {
+                dayRecordsEl.innerHTML = '<div style="text-align: center; padding: 20px; color: #7f8c8d;">當日無打卡記錄</div>';
+                return;
+            }
+            
+            dayRecords.forEach(record => {
+                const recordEl = document.createElement('div');
+                recordEl.className = 'day-record-item';
+                
+                recordEl.innerHTML = `
+                    <div>
+                        <strong>${record.name}</strong> (${record.role})
+                    </div>
+                    <div>
+                        <span class="time-in">${record.timeIn || '--:--:--'}</span> - 
+                        <span class="time-out">${record.timeOut || '--:--:--'}</span>
+                    </div>
+                    <div class="location">${record.location}</div>
+                `;
+                
+                dayRecordsEl.appendChild(recordEl);
+            });
+        }
+        
+        // 月份導航
+        prevMonthBtn.addEventListener('click', function() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateCalendar();
+        });
+        
+        nextMonthBtn.addEventListener('click', function() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendar();
+        });
+        
+        // 初始化
+        updateSystemStatus();
+        updateRecordsTable();
+        updateStats();
+        updateCalendar();
+        updateDayDetails(selectedDate);
+        updateCardsTable();
+        
+        console.log("系統初始化完成");
+        console.log("使用說明：");
+        console.log("1. 點擊『啟動打卡系統』開始接受打卡");
+        console.log("2. 在卡片ID輸入框中輸入卡片ID");
+        console.log("3. 點擊『確認打卡』按鈕或按Enter鍵進行打卡");
+        console.log("4. 點擊『結束打卡系統』停止接受打卡");
+        console.log("5. 所有資料已使用localStorage保存，關閉瀏覽器後不會遺失");
+    </script>
+</body>
+</html>
